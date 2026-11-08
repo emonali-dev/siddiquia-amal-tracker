@@ -1,0 +1,8 @@
+{
+  "name": "Halal Scanner by EFTNIX",
+  "short_name": "Halal Scanner",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f7faf8",
+  "theme_color": "#087f5b"
+}
