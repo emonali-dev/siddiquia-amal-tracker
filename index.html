@@ -1,10 +1,107 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#087f5b"><title>Halal Scanner | EFTNIX</title><link rel="stylesheet" href="styles.css"><link rel="icon" href="favicon.svg"></head><body>
-<header><a class="brand" href="./"><b>ح</b><span>HALAL SCANNER<small>BY EFTNIX</small></span></a><div class="head-actions"><button id="lang-toggle" type="button" class="lang-btn">বাংলা</button><label class="live">● PRODUCT LOOKUP</label></div></header>
-<section class="hero"><div><small>SMART FOOD CHECKER</small><h1>Know what<br><i>you eat.</i></h1><p>Scan a barcode or enter its number to explore ingredients, food additives and available halal information.</p><strong>✦ Information-led. Transparent. Easy to understand.</strong></div><div class="art"><div class="pack"><small>HALAL SCAN</small><div>✿<br><b>FOOD<br>PRODUCT</b></div><hr>▏▏▏▏▏▏▏▏▏</div><span>✓ Ingredient insights</span></div></section>
-<main><section class="panel"><small class="eyebrow">START HERE</small><h2>Check a food product</h2><form id="form"><label for="barcode">Product barcode (EAN / UPC)</label><div class="search"><input id="barcode" placeholder="e.g. 3017620422003" inputmode="numeric" maxlength="32" required><button id="search" type="submit">Analyze product →</button></div></form><div class="actions"><button id="camera" type="button">▣ Scan with camera</button><button id="sample" type="button">Try a sample barcode</button></div><div id="cameraBox" hidden><video id="video" playsinline></video><button id="stop" type="button">Stop camera</button><p id="cammsg">Point camera at barcode</p></div><p class="hint">Product data is retrieved from Open Food Facts when available. Camera scanning requires HTTPS and browser support.</p></section>
-<section id="results" hidden><div class="resulthead"><div><small class="eyebrow">PRODUCT REPORT</small><h2>Scan results</h2></div><button id="clear">Clear</button></div><div id="loading" class="panel" hidden>Looking up product information…</div><div id="error" class="error" hidden></div><article id="card" class="panel" hidden><div class="product"><div id="photo" class="photo">NO<br>IMAGE</div><div><small id="brand" class="eyebrow"></small><h3 id="name"></h3><p id="meta"></p><span id="status" class="pill">Not enough data</span></div></div><aside><b>Important:</b> This is an ingredient information aid, not a halal certificate or religious ruling. Missing information does not mean a product is haram.</aside><div class="stats"><div><b id="icount">—</b><small>Ingredients listed</small></div><div><b id="acount">—</b><small>Additives identified</small></div><div><b>Not verified</b><small>Halal certification</small></div></div><h4>Ingredient review</h4><div id="ingredients" class="chips"></div><h4>E-number / additive information</h4><div id="additives"></div><h4>Certification information</h4><p id="cert" class="muted"></p>
-<h4>Ingredient Intelligence</h4>
-<p class="muted">Automated ingredient clues — not a religious ruling.</p>
-<div id="intelligence" class="intel-list"></div>
-<div class="intel-note" id="overall-explanation">Analysis will appear here.</div><footer>Source: <a href="https://world.openfoodfacts.org/" target="_blank" rel="noopener">Open Food Facts</a>. Data may be incomplete or user-contributed.</footer></article></section>
-<section class="how"><small class="eyebrow">HOW IT WORKS</small><h2>Clarity in three steps</h2><div class="steps"><article><b>01</b><h3>Scan or search</h3><p>Use your camera or enter the barcode printed on the package.</p></article><article><b>02</b><h3>Explore ingredients</h3><p>Review listed ingredients and additive codes, with context where available.</p></article><article><b>03</b><h3>Check the evidence</h3><p>See what is known, what is uncertain, and what still needs verification.</p></article></div></section></main><footer class="sitefoot">HALAL SCANNER · BY EFTNIX<p>Always verify important product claims with the manufacturer or a recognized halal authority.</p><small>© <span id="year"></span> EFTNIX</small></footer><script src="app.js"></script></body></html>
+<!doctype html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0d3b2e">
+<meta name="description" content="Siddiquia Amal Tracker — দৈনিক আমল, দরুদ ও জিকিরের হিসাব রাখুন।">
+<link rel="manifest" href="manifest.json">
+<title>Siddiquia Amal Tracker</title>
+<style>
+:root{--bg:#f4f7f2;--card:#fff;--ink:#18352b;--muted:#718078;--green:#0d6048;--green2:#16815e;--gold:#c69b43;--line:#e3ebe4;--soft:#eaf3ed;--danger:#b83b3b;--shadow:0 8px 26px #173d2b12}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans Bengali",sans-serif}
+header{background:linear-gradient(135deg,#0a352a,#11694c);color:#fff;padding:25px 18px 30px;border-radius:0 0 26px 26px}
+.top{max-width:980px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.brand{font-size:20px;font-weight:800;letter-spacing:.2px}.tag{font-size:12px;color:#d7e9dc;margin-top:4px}
+.header-actions button{background:#ffffff18;color:#fff;border:1px solid #ffffff40;border-radius:12px;padding:9px 11px}
+main{max-width:980px;margin:-12px auto 40px;padding:0 15px}
+.nav{display:flex;gap:8px;overflow:auto;padding:10px 0 15px;scrollbar-width:none}
+.nav button{white-space:nowrap;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:10px 14px;border-radius:999px;font-weight:650}
+.nav button.active{background:var(--green);color:#fff;border-color:var(--green)}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:var(--shadow)}
+.stat small,.muted{color:var(--muted)}.stat strong{display:block;font-size:25px;margin-top:5px;color:var(--green)}
+.section-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:12px 0}
+h2{font-size:18px;margin:0}h3{font-size:16px;margin:0 0 8px}
+button{cursor:pointer;font:inherit}.primary{background:var(--green);color:white;border:0;border-radius:12px;padding:11px 15px;font-weight:700}
+.secondary{background:var(--soft);color:var(--green);border:1px solid #d7e8dc;border-radius:12px;padding:10px 13px;font-weight:650}
+.danger{background:#fff1f1;color:var(--danger);border:1px solid #f0d6d6;border-radius:10px;padding:8px 10px}
+.amal-list{display:grid;gap:12px}.amal{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:15px;box-shadow:var(--shadow)}
+.amal-top{display:flex;justify-content:space-between;gap:12px}.amal-name{font-weight:800;font-size:16px}.amal-desc{font-size:12px;color:var(--muted);margin-top:4px}
+.count{font-size:27px;font-weight:850;color:var(--green);font-variant-numeric:tabular-nums;margin:12px 0 2px}
+.progress{height:8px;background:#e8eee9;border-radius:99px;overflow:hidden;margin:8px 0}.progress span{height:100%;display:block;background:linear-gradient(90deg,var(--green),#39a878);border-radius:99px}
+.meta{display:flex;justify-content:space-between;color:var(--muted);font-size:12px}
+.controls{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}.controls button{flex:1;min-width:54px}
+.iconbtn{border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:10px;padding:7px 9px}
+form{display:grid;gap:11px}label{font-size:13px;font-weight:700}input,textarea,select{width:100%;border:1px solid #d8e2da;border-radius:11px;padding:12px;background:#fff;color:var(--ink);font:inherit;margin-top:5px}textarea{min-height:70px;resize:vertical}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.hidden{display:none!important}.empty{text-align:center;padding:30px 15px;color:var(--muted)}
+.item-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--line);gap:12px}
+.item-row:last-child{border-bottom:0}.pill{background:var(--soft);color:var(--green);padding:5px 9px;border-radius:99px;font-size:12px}
+.modal-back{position:fixed;inset:0;background:#071b14a8;display:flex;align-items:flex-end;justify-content:center;padding:12px;z-index:5}
+.modal{background:var(--card);border-radius:22px 22px 16px 16px;padding:20px;width:min(100%,560px);max-height:90vh;overflow:auto}
+.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:25px}
+.notice{background:#fff8e8;border:1px solid #f0dfb9;color:#70561d;border-radius:13px;padding:12px;font-size:12px;line-height:1.6;margin:12px 0}
+@media(min-width:700px){.grid{grid-template-columns:repeat(4,minmax(0,1fr))}.amal-list{grid-template-columns:repeat(2,minmax(0,1fr))}.modal-back{align-items:center}}
+</style>
+</head>
+<body>
+<header><div class="top"><div><div class="brand">☪ Siddiquia Amal Tracker</div><div class="tag">প্রতিদিনের আমল • জিকির • আধ্যাত্মিক অগ্রগতি</div></div><div class="header-actions"><button id="installBtn" class="hidden">ইনস্টল</button></div></div></header>
+<main>
+<nav class="nav">
+<button class="active" data-tab="home">ড্যাশবোর্ড</button><button data-tab="amals">আমলসমূহ</button><button data-tab="add">নতুন আমল</button><button data-tab="report">রিপোর্ট</button><button data-tab="backup">ব্যাকআপ</button>
+</nav>
+<section id="home">
+<div class="grid">
+<div class="card stat"><small>আজকের মোট গণনা</small><strong id="todayTotal">০</strong></div>
+<div class="card stat"><small>সক্রিয় আমল</small><strong id="activeCount">০</strong></div>
+<div class="card stat"><small>আজ সম্পন্ন লক্ষ্য</small><strong id="goalDone">০%</strong></div>
+<div class="card stat"><small>মোট আমল</small><strong id="allTotal">০</strong></div>
+</div>
+<div class="section-head"><h2>আজকের আমল</h2><button class="secondary" onclick="openAdd()">＋ আমল তৈরি</button></div>
+<div id="homeList" class="amal-list"></div>
+<div class="notice">আপনার আমলের সংখ্যা এই ডিভাইসের ব্রাউজারে সংরক্ষিত হচ্ছে। ডিভাইস বদলালে বা ব্রাউজারের ডেটা মুছে গেলে ব্যাকআপ ফাইল থেকে পুনরুদ্ধার করুন।</div>
+</section>
+<section id="amals" class="hidden"><div class="section-head"><h2>আমার সব আমল</h2><button class="primary" onclick="openAdd()">＋ নতুন আমল</button></div><div id="allList" class="amal-list"></div></section>
+<section id="add" class="hidden"><div class="card"><h2 id="formTitle">নতুন আমল তৈরি করুন</h2><form id="amalForm">
+<input type="hidden" id="editId">
+<label>আমলের নাম *<input id="name" required placeholder="যেমন: দরুদ শরীফ"></label>
+<label>আরবি / উচ্চারণ / বিবরণ (ঐচ্ছিক)<textarea id="description" placeholder="আমলের বিবরণ লিখুন"></textarea></label>
+<div class="form-row"><label>মোট লক্ষ্যমাত্রা<input id="target" type="number" min="0" placeholder="যেমন 125000"></label><label>দৈনিক লক্ষ্য<input id="daily" type="number" min="0" placeholder="যেমন 12500"></label></div>
+<div class="form-row"><label>শুরুর তারিখ<input id="startDate" type="date"></label><label>শেষের তারিখ (ঐচ্ছিক)<input id="endDate" type="date"></label></div>
+<button class="primary" type="submit">আমল সংরক্ষণ করুন</button>
+</form></div></section>
+<section id="report" class="hidden"><div class="card"><h2>আমলের রিপোর্ট</h2><p class="muted">এই ডিভাইসে সংরক্ষিত সব আমলের সারাংশ।</p><div id="reportContent"></div></div></section>
+<section id="backup" class="hidden"><div class="card"><h2>ডেটা ব্যাকআপ ও পুনরুদ্ধার</h2><p class="muted">আপনার সব আমল ও গণনার JSON ব্যাকআপ ডাউনলোড করুন। অন্য ডিভাইসে এই ফাইল ইমপোর্ট করতে পারবেন।</p><div class="controls"><button class="primary" onclick="exportData()">ব্যাকআপ ডাউনলোড</button><label class="secondary" style="display:inline-flex;align-items:center;justify-content:center">ব্যাকআপ ইমপোর্ট<input id="importFile" type="file" accept="application/json" hidden></label></div><div class="notice">নিয়মিত ব্যাকআপ রাখুন। ইমপোর্ট করলে বর্তমান ডেটার সঙ্গে ব্যাকআপের ডেটা প্রতিস্থাপিত হবে।</div></div></section>
+<footer>Siddiquia Amal Tracker • ব্যক্তিগত আমল হিসাবের সহায়ক</footer>
+</main>
+<div id="modalRoot"></div>
+<script>
+const KEY='siddiquia-amal-tracker-v1';
+let data=load();
+function load(){try{return JSON.parse(localStorage.getItem(KEY))||{amals:[],logs:[]}}catch(e){return {amals:[],logs:[]}}}
+function save(){localStorage.setItem(KEY,JSON.stringify(data));render()}
+const today=()=>new Date().toISOString().slice(0,10);
+const bn=n=>Number(n||0).toLocaleString('bn-BD');
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+function logCount(id,delta){const d=today();let l=data.logs.find(x=>x.id===id&&x.date===d);if(!l){l={id,date:d,count:0};data.logs.push(l)}l.count=Math.max(0,l.count+delta);const a=data.amals.find(x=>x.id===id);if(a)a.total=Math.max(0,(a.total||0)+delta);save()}
+function todayCount(id){return data.logs.filter(x=>x.id===id&&x.date===today()).reduce((s,x)=>s+x.count,0)}
+function pct(a){return a.target>0?Math.min(100,Math.round((a.total||0)/a.target*100)):0}
+function card(a){let t=todayCount(a.id),p=pct(a);return `<article class="amal"><div class="amal-top"><div><div class="amal-name">${esc(a.name)}</div><div class="amal-desc">${esc(a.description||'ব্যক্তিগত আমল')}</div></div><button class="iconbtn" onclick="editAmal('${a.id}')">✎</button></div><div class="count">${bn(a.total||0)}</div><div class="meta"><span>মোট গণনা</span><span>${a.target?bn(a.target)+' লক্ষ্য':'লক্ষ্য নির্ধারিত নয়'}</span></div><div class="progress"><span style="width:${p}%"></span></div><div class="meta"><span>মোট অগ্রগতি ${p}%</span><span>আজ ${bn(t)}${a.daily?' / '+bn(a.daily):''}</span></div><div class="controls"><button class="primary" onclick="logCount('${a.id}',1)">+১</button><button class="secondary" onclick="logCount('${a.id}',10)">+১০</button><button class="secondary" onclick="logCount('${a.id}',100)">+১০০</button><button class="secondary" onclick="logCount('${a.id}',1000)">+১০০০</button><button class="iconbtn" onclick="logCount('${a.id}',-1)" title="এক কমান">↶</button></div></article>`}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function render(){let active=data.amals;document.getElementById('homeList').innerHTML=active.length?active.map(card).join(''):'<div class="card empty">এখনো কোনো আমল তৈরি করেননি।<br><br><button class="primary" onclick="openAdd()">প্রথম আমল তৈরি করুন</button></div>';document.getElementById('allList').innerHTML=active.length?active.map(a=>card(a)+`<div style="margin-top:-4px;text-align:right"><button class="danger" onclick="deleteAmal('${a.id}')">আমল মুছুন</button></div>`).join(''):'<div class="empty">কোনো আমল নেই।</div>';let tt=active.reduce((s,a)=>s+todayCount(a.id),0),all=active.reduce((s,a)=>s+(a.total||0),0),goals=active.filter(a=>a.daily>0);let done=goals.length?Math.round(goals.reduce((s,a)=>s+Math.min(1,todayCount(a.id)/a.daily),0)/goals.length*100):0;document.getElementById('todayTotal').textContent=bn(tt);document.getElementById('activeCount').textContent=bn(active.length);document.getElementById('goalDone').textContent=bn(done)+'%';document.getElementById('allTotal').textContent=bn(all);document.getElementById('reportContent').innerHTML=active.length?active.map(a=>`<div class="item-row"><div><b>${esc(a.name)}</b><div class="muted" style="font-size:12px">আজ ${bn(todayCount(a.id))} • মোট ${bn(a.total||0)}</div></div><span class="pill">${pct(a)}%</span></div>`).join(''):'<p class="muted">রিপোর্ট দেখানোর মতো তথ্য নেই।' }
+function switchTab(tab){document.querySelectorAll('main>section').forEach(s=>s.classList.add('hidden'));document.getElementById(tab).classList.remove('hidden');document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));if(tab==='add')resetForm()}
+document.querySelectorAll('.nav button').forEach(b=>b.addEventListener('click',()=>switchTab(b.dataset.tab)));
+function openAdd(){switchTab('add')}
+function resetForm(){document.getElementById('amalForm').reset();document.getElementById('editId').value='';document.getElementById('formTitle').textContent='নতুন আমল তৈরি করুন';document.getElementById('startDate').value=today()}
+function editAmal(id){let a=data.amals.find(x=>x.id===id);if(!a)return;switchTab('add');document.getElementById('editId').value=id;document.getElementById('name').value=a.name;document.getElementById('description').value=a.description||'';document.getElementById('target').value=a.target||'';document.getElementById('daily').value=a.daily||'';document.getElementById('startDate').value=a.startDate||'';document.getElementById('endDate').value=a.endDate||'';document.getElementById('formTitle').textContent='আমল সম্পাদনা করুন'}
+document.getElementById('amalForm').addEventListener('submit',e=>{e.preventDefault();let id=document.getElementById('editId').value;let obj={name:document.getElementById('name').value.trim(),description:document.getElementById('description').value.trim(),target:+document.getElementById('target').value||0,daily:+document.getElementById('daily').value||0,startDate:document.getElementById('startDate').value,endDate:document.getElementById('endDate').value};if(!obj.name)return;if(id){Object.assign(data.amals.find(x=>x.id===id),obj)}else{data.amals.push({id:uid(),...obj,total:0,createdAt:new Date().toISOString()})}save();switchTab('home')});
+function deleteAmal(id){if(!confirm('এই আমল ও এর হিসাব মুছে ফেলবেন?'))return;data.amals=data.amals.filter(a=>a.id!==id);data.logs=data.logs.filter(l=>l.id!==id);save()}
+function exportData(){let blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='siddiquia-amal-backup-'+today()+'.json';a.click();URL.revokeObjectURL(url)}
+document.getElementById('importFile').addEventListener('change',async e=>{let f=e.target.files[0];if(!f)return;try{let d=JSON.parse(await f.text());if(!Array.isArray(d.amals)||!Array.isArray(d.logs))throw Error();if(confirm('বর্তমান ডেটা প্রতিস্থাপন করে ব্যাকআপ ইমপোর্ট করবেন?')){data=d;save();alert('ব্যাকআপ সফলভাবে ইমপোর্ট হয়েছে।')}}catch(err){alert('ফাইলটি সঠিক ব্যাকআপ নয়।')}e.target.value=''});
+render();
+let deferredPrompt;window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;document.getElementById('installBtn').classList.remove('hidden')});document.getElementById('installBtn').addEventListener('click',async()=>{if(!deferredPrompt)return;deferredPrompt.prompt();deferredPrompt=null});
+if('serviceWorker'in navigator && location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{});
+</script>
+</body></html>
